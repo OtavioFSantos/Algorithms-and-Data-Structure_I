@@ -3,17 +3,19 @@
 #include <string.h>
 
 int menu(void);
-void *add(void *pBuffer, int size);
-void *remov(void *pBuffer, int size);
-void show(void *pBuffer, int size);
-void search(void *pBuffer, int size);
+void *add(void *pBuffer);
+void *remov(void *pBuffer);
+void show(void *pBuffer);
+void search(void *pBuffer);
 
+
+int size = 0;
  
 int main(){
-    int choice, size = 0;
+    int choice;
     void *pBuffer;
 
-    pBuffer = (void *)malloc(sizeof(int));
+    pBuffer = (void *)calloc(1, sizeof(int));
     if (!pBuffer){
         printf("Could not allocate required memory!\n");
         return -1;
@@ -27,18 +29,17 @@ int main(){
             case 1:
                 size++;
                 *(int *)pBuffer = size;
-                pBuffer = add(pBuffer, size);
+                pBuffer = add(pBuffer);
                 break;
             case 2:
-                pBuffer = remov(pBuffer, size);
-                size--;
+                pBuffer = remov(pBuffer);
                 *(int *)pBuffer = size;
                 break;
             case 3:
-                search(pBuffer, size);
+                search(pBuffer);
                 break;
             case 4:
-                show(pBuffer, size);
+                show(pBuffer);
                 break;
             case 5:
                 free(pBuffer);
@@ -50,23 +51,24 @@ int main(){
 }
 
 
-void *remov(void *pBuffer, int size){
+void *remov(void *pBuffer){
     char name[10], nameaux[10];
-    int person, i, c;
-
-    person = sizeof(int)*2+sizeof(char)*10;
+    int person, i, c, k, j;
 
     if(size == 0){
         printf("\nNo data yet!\n");
-        return;
+        return pBuffer;
     }
+
+    person = sizeof(int)*2+sizeof(char)*10;
+
     
     printf("Name to remove: "); scanf("%s", name);
 
 
-    for(i = size, c = 0; c < size; i--, c++){
+    for(i = size, c = 1; c < size+1; i--, c++){
 
-        for(int k = 0; k < strlen(name)+1; k++){
+        for(k = 0; k < strlen(name)+1; k++){
             nameaux[k] = *(char *)(pBuffer + k + person*(size-i) + sizeof(int));
         }
 
@@ -74,11 +76,20 @@ void *remov(void *pBuffer, int size){
 
             if(c != size){
 
-                for(int j = 0; j < 10; j++){
-                    *(char *)(pBuffer + j + person*(size-i) + sizeof(int)) = *(char *)(pBuffer + j - 1 + person*(size-i+1) + sizeof(int));
+                for(j = 0; j < 10; j++){
+                    *(char *)(pBuffer + j + person*(size-i) + sizeof(int)) = *(char *)(pBuffer + j + person*(size-i+1) + sizeof(int));
                 }
                 *(int *)(pBuffer+sizeof(char)*10+person*(size-i) + sizeof(int)) = *(int *)(pBuffer+sizeof(char)*10+person*(size-i+1) + sizeof(int));
                 *(int *)(pBuffer+sizeof(char)*10+sizeof(int)+person*(size-i) + sizeof(int)) = *(int *)(pBuffer+sizeof(char)*10+sizeof(int)+person*(size-i+1) + sizeof(int));
+
+
+                for(i = i - 1; c < size-1; i--, c++){
+                    for(j = 0; j < 10; j++){
+                        *(char *)(pBuffer + j + person*(size-i) + sizeof(int)) = *(char *)(pBuffer + j + person*(size-i+1) + sizeof(int));
+                    }
+                    *(int *)(pBuffer+sizeof(char)*10+person*(size-i) + sizeof(int)) = *(int *)(pBuffer+sizeof(char)*10+person*(size-i+1) + sizeof(int));
+                    *(int *)(pBuffer+sizeof(char)*10+sizeof(int)+person*(size-i) + sizeof(int)) = *(int *)(pBuffer+sizeof(char)*10+sizeof(int)+person*(size-i+1) + sizeof(int));
+                }
 
             }
 
@@ -87,6 +98,7 @@ void *remov(void *pBuffer, int size){
                 printf("Could not allocate required memory!\n");
                 exit(1);
             }
+            size--;
             return pBuffer;
         }
     }
@@ -95,9 +107,9 @@ void *remov(void *pBuffer, int size){
 }
 
 
-void search(void *pBuffer, int size){
+void search(void *pBuffer){
     char name[10], nameaux[10];
-    int person, i, c;
+    int person, i = 0, c = 0, k = 0;
 
     person = sizeof(int)*2+sizeof(char)*10;
 
@@ -113,12 +125,12 @@ void search(void *pBuffer, int size){
 
     for(i = size, c = 0; c < size; i--, c++){
 
-        for(int k = 0; k < strlen(name)+1; k++){
+        for(k = 0; k < strlen(name)+1; k++){
             nameaux[k] = *(char *)(pBuffer + k + person*(size-i));
         }
         if(strcmp(nameaux, name) == 0){
             printf("\nPerson[%d]: \tName: ", c);
-            for (int k = 0; k < 10; k++){
+            for (k = 0; *(char *)(pBuffer + k + person*(size-i)) >= 'a' && *(char *)(pBuffer + k + person*(size-i)) <= 'z'; k++){
                 printf("%c", *(char *)(pBuffer + k + person*(size-i)));
             }
             printf("\n\t\tAge: %d\n\t\tTel: %d\n\n", 
@@ -128,7 +140,7 @@ void search(void *pBuffer, int size){
 }
 
 
-void *add(void *pBuffer, int size){
+void *add(void *pBuffer){
     char name[10];
     int age, tel, person;
 
@@ -138,7 +150,7 @@ void *add(void *pBuffer, int size){
     printf("-Add age: "); scanf("%d", &age);
     printf("-Add tel: "); scanf("%d", &tel);
 
-    pBuffer = (char *)realloc(pBuffer, person*size+sizeof(int));
+    pBuffer = (char *)realloc(pBuffer, person*size+sizeof(int)+1);
     if (!pBuffer){
         printf("Could not allocate required memory!\n");
         exit(1);
@@ -167,8 +179,8 @@ void *add(void *pBuffer, int size){
 }
 
 
-void show(void *pBuffer, int size){
-    int person, i, c;
+void show(void *pBuffer){
+    int person, i = 0, c = 0, k = 0;
     
     person = sizeof(int)*2+sizeof(char)*10;
 
@@ -183,7 +195,7 @@ void show(void *pBuffer, int size){
 
     for(i = size, c = 0; c < size; i--, c++){
         printf("Person[%d]: \tName: ", c);
-        for (int k = 0; k < 10; k++){
+        for(k = 0; *(char *)(pBuffer + k + person*(size-i)) >= 'a' && *(char *)(pBuffer + k + person*(size-i)) <= 'z'; k++){
             printf("%c", *(char *)(pBuffer + k + person*(size-i)));
         }
 
