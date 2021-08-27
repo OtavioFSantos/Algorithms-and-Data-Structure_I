@@ -3,7 +3,8 @@ C exercises
 
 # Ex1) Simple hello world
 
-Hello World para testar debugger
+Hello World para testar debugger.
+
 
 # Ex2) Names in a single dynamic string
 
