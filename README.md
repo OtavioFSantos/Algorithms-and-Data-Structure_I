@@ -41,7 +41,7 @@ Hello World para testar debugger.
 - Não pode usar struct dentro do pBuffer.
 
 
-### Agenda) Basically a overpowered version of exercise 3
+### Agenda) Basically an overpowered version of exercise 3
 
 - Continuar a sua implementação da agenda, mas incluir o seguinte.
 - Nenhuma variável pode ser declarada em todo o programa, somente ponteiros. Todos os dados do programa devem ser guardados dentro do pBuffer.
