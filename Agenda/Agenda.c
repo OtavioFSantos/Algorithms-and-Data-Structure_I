@@ -118,10 +118,6 @@ void add(void *pSentinel, void *pBuffer){
             if(*(void **)(pPerson+PREV) == NULL){
                 *(void **)(pSentinel+FIRST) = pPerson; //pSentinel receive first address
             }
-            //updates the new last address if needed
-            if(*(void **)(pBuffer+NEXT) == NULL && *(int *)pSentinel == 1){
-                *(void **)(pSentinel+LAST) = pBuffer; //pSentinel receive last address
-            }
 
             *(int *)pSentinel += 1; //size++
             return;
@@ -129,14 +125,14 @@ void add(void *pSentinel, void *pBuffer){
 
         //needs this otherwise there will be segmentation fault later on
         if(*(void **)(pBuffer+NEXT) == NULL){
-            aux = pBuffer;
+            break;
         }
         pBuffer = *(void **)(pBuffer+NEXT); //receives next address
     }while(pBuffer != NULL);
 
     //in the case of the person is being added to the end
-    *(void **)(pPerson+PREV) = aux;
-    *(void **)(aux+NEXT) = pPerson;
+    *(void **)(pPerson+PREV) = pBuffer;
+    *(void **)(pBuffer+NEXT) = pPerson;
     *(void **)(pSentinel+LAST) = pPerson;
 
     *(int *)pSentinel += 1; //size++
