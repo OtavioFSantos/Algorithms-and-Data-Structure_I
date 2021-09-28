@@ -51,3 +51,11 @@ Hello World para testar debugger.
 - Usar fila ordenada (heap) para armazenar as pessoas em ordem alfabética sempre que o usuário incluir uma nova pessoa.
 - Implementar a base de dados da agenda usando lista duplamente ligada
 - Somente essa base de dados pode ficar fora do buffer principal, ou seja, pode usar um malloc para cada nodo.
+
+
+### AVL Tree) AVL Tree implementation with random numbers
+
+- O programa só pergunta 1 número para o usuário quantos nós (n)
+- O programa automaticamente gera n nós em sequência com valor aleatório e vai adicionando na árvore
+- Use srand(time(0));
+- Ao final, use um código de verificação para validar a árvore e dar ok
