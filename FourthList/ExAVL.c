@@ -193,5 +193,21 @@ void secondScenario(){
     root = add(root, 15);
     showTree(root);
 
+    printf("\nThird case:\n");
+    root = NULL;
+    root = add(root, 20);
+    root = add(root, 4);
+    root = add(root, 26);
+    root = add(root, 3);
+    root = add(root, 9);
+    root = add(root, 21);
+    root = add(root, 30);
+    root = add(root, 2);
+    root = add(root, 7);
+    root = add(root, 11);
+    root = add(root, 15);
+    showTree(root);
+
+    printf("\n\n");
     return 0;
 }
