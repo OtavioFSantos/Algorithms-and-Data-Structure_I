@@ -209,5 +209,4 @@ void secondScenario(){
     showTree(root);
 
     printf("\n\n");
-    return 0;
 }
