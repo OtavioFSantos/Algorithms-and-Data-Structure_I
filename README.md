@@ -59,3 +59,12 @@ Hello World para testar debugger.
 - O programa automaticamente gera n nós em sequência com valor aleatório e vai adicionando na árvore
 - Use srand(time(0));
 - Ao final, use um código de verificação para validar a árvore e dar ok
+
+
+
+### Sorting Algorithms) Implementation of Insertion, Selection, Quick and Merge sorting algorithms
+
+- Implementar os algoritmos de ordenação Insertion Sort, Selection Sort, Quick Sort e Merge Sort.
+- O programa deve solicitar o tamanho do vetor de números (n) que será ordenado
+- O programa deve preencher um vetor de tamanho n com números aleatórios. Usar srand(time(NULL)); no inicio do programa.
+- Faça um código que verifica se o resultado dado por cada algoritmo de ordenação está correto.
